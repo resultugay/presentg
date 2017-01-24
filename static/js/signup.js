@@ -141,7 +141,7 @@
 	// Dummy Submit Form (Remove this)
 	//----------------------------------------------
 	// This is just a dummy form submission. You should use your AJAX function or remove this function if you are not using AJAX.
-  function dummy_submit_form($form)
+  function dummy_submit_forjQuerym($form)
   {
   	if($form.valid())
   	{
