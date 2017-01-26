@@ -8,9 +8,7 @@
     	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 		<link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
 		<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
-		<script src="{{ url_for('static', filename='js/signup.js') }}"></script>
-    	
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>    	
     	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />    	
 	</head>
 	<body>
@@ -52,15 +50,20 @@
 						<input type="email" minlength="5" maxlength="40" class="form-control" id="reg_email" name="reg_email" value="{{ request.form.email}}" placeholder="email" required autofocus/>
 					</div>
 					<div class="form-group">
-						<label for="reg_fullname" class="sr-only">Full Name</label>
-						<input type="text" maxlength="40" class="form-control" id="reg_fullname" name="reg_fullname" value="{{ request.form.fullname }}" placeholder="full name" required autofocus/>
+						<label for="reg_firstname" class="sr-only">First Name</label>
+						<input type="text" maxlength="40" class="form-control" id="reg_firstname" name="reg_firstname" value="{{ request.form.firstname }}" placeholder="first name" required autofocus/>
 					</div>
-
+					
+					<div class="form-group">
+						<label for="reg_surname" class="sr-only">SurName</label>
+						<input type="text" maxlength="40" class="form-control" id="reg_surname" name="reg_surname" value="{{ request.form.surname }}" placeholder="surname" required autofocus/>
+					</div>
+					
 					<div class="form-group login-group-checkbox">
-						<input type="radio" class="" name="reg_gender" id="male" value="male" required autofocus/>
+						<input type="radio" class="" name="reg_gender" id="male" value="male" checked />
 						<label for="male">male</label>
 
-						<input type="radio" class="" name="reg_gender" id="female" value="female" checked required autofocus/>
+						<input type="radio" class="" name="reg_gender" id="female" value="female"  />
 						<label for="female">female</label>
 					</div>
 
