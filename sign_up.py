@@ -12,22 +12,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from ctypes.wintypes import BOOLEAN
 from sqlalchemy.sql.sqltypes import BINARY
+from user import user
 
 Base = declarative_base()    
 
-class Users(Base):
-    __tablename__ = 'users'
-    # Here we define columns for the table person
-    # Notice that each column is also a normal Python instance attribute.
-    id = Column(Integer, primary_key=True)
-    username = Column(String(40), nullable=False)
-    email = Column(String(40), nullable=False)
-    name = Column(String(40), nullable=False)
-    surname = Column(String(40), nullable=False)
-    password = Column(String(40), nullable=False)
-    salt = Column(String(40), nullable=False)
-    gender = Column(String(1),nullable=False)
-    
+
 engine = create_engine('postgresql://postgres:123456@localhost:5432/test')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
@@ -44,7 +33,7 @@ sign_up = Blueprint('sign_up',__name__)
 ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
-@sign_up.route('/sign_up', methods=['GET', 'POST'])
+@sign_up.route('/signup', methods=['GET', 'POST'])
 def sign_up_page():
     if request.method == 'GET':
         return render_template("sign_up.html")
@@ -55,7 +44,8 @@ def sign_up_page():
         salt = ""
         for i in range(16):
             salt = salt + (random.choice(ALPHABET))                
-        hashed_password = hash.sha512_crypt.using(salt=salt).hash(password)        
+        #hashed_password = hash.sha512_crypt.using(salt=salt).hash(password)   
+        hashed_password = hash.sha512_crypt.using(salt_size = 4).hash(password)     
         #k = hash.sha512_crypt.verify(password, hashed_password) for verifying hash        
         email    =  request.form['reg_email']
         name =  request.form['reg_name']
@@ -64,7 +54,7 @@ def sign_up_page():
             gender = 'M'
         else:
             gender = 'F'
-        new_user = Users(username=username,email=email,name=name,surname=surname,password=hashed_password,salt=salt,gender = gender)
+        new_user = user(username=username,email=email,name=name,surname=surname,password=hashed_password,salt=salt,gender = gender)
         session.add(new_user)
         session.commit()
         return render_template("home.html")
