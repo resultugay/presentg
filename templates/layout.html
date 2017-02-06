@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    {% block head %}
+	    <meta charset="utf-8" />
+    	<title>PresentG - {% block title %}{% endblock %}</title>
+    	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+    	{% endblock %}
+	</head>
+	<body>
+	
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="/">Brand</a>
+		    </div>
+	    {% block content %}{% endblock %}
+	     </div><!-- /.container-fluid -->
+		</nav>
+	
+	</body>
+	
+</html>
