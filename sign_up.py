@@ -12,7 +12,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from ctypes.wintypes import BOOLEAN
 from sqlalchemy.sql.sqltypes import BINARY
-from user import user
+from User import User
 
 Base = declarative_base()    
 
@@ -54,7 +54,7 @@ def sign_up_page():
             gender = 'M'
         else:
             gender = 'F'
-        new_user = user(username=username,email=email,name=name,surname=surname,password=hashed_password,salt=salt,gender = gender)
+        new_user = User(username=username,email=email,name=name,surname=surname,password=hashed_password,salt=salt,gender = gender)
         session.add(new_user)
         session.commit()
         return render_template("home.html")

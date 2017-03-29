@@ -17,8 +17,8 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-class user(Base):
-    __tablename__ = 'user'
+class User(Base):
+    __tablename__ = 'users'
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
@@ -27,7 +27,6 @@ class user(Base):
     name = Column(String(40), nullable=False)
     surname = Column(String(40), nullable=False)
     password = Column(String(40), nullable=False)
-    salt = Column(String(40), nullable=False)
     gender = Column(String(1),nullable=False)
     is_active = True
     
@@ -49,5 +48,5 @@ class user(Base):
         return True
 
 def get_user(username):
-    user1 = session.query(user).filter(user.username==username).first() if user else None
+    user1 = session.query(User).filter(User.username==username).first() if User else None
     return user1

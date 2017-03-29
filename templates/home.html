@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
+{% if not current_user.is_authenticated %}
+
  <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
@@ -13,6 +15,13 @@
 		        Or
 		<a href = "{{ url_for('sign_up.sign_up_page') }}" class="btn btn-default">Sign Up</a>
       </form>
-   
+{% endif %}
+{% if current_user.is_authenticated %}
+		  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	<form class="navbar-form navbar-right">
+        		  Hi {{ current_user.name }}!
+	<a href = "{{ url_for('log_out.log_out_page') }}" class="btn btn-default">Log Out</a>
+    </form>
+{% endif %}
     </div><!-- /.navbar-collapse -->
 {% endblock %}	

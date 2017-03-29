@@ -2,7 +2,7 @@ from flask.blueprints import Blueprint
 from flask.templating import render_template
 from flask import flash
 from forms import LoginForm
-from user import get_user
+from User import get_user
 from passlib import hash
 from flask_login import login_user
 from flask import current_app, request,redirect
@@ -17,7 +17,6 @@ def sign_in_page():
     if form.validate_on_submit():
         username = form.data['username']
         password = form.data['password']
-        print(password)
         user = get_user(username)
         if user is not None:
             if hash.sha512_crypt.verify(password,user.password):

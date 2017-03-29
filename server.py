@@ -2,14 +2,16 @@ from flask import Flask
 from flask.templating import render_template
 from sign_in import sign_in
 from sign_up import sign_up
+from log_out import log_out
 from home import home
 from flask_login.login_manager import LoginManager
-from user import get_user
+from User import get_user
 
 def create_app():
     app = Flask(__name__)
     app.register_blueprint(home)
     app.register_blueprint(sign_in)
+    app.register_blueprint(log_out)
     app.register_blueprint(sign_up)
     app.config.from_object('settings')
     return app
