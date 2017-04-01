@@ -3,6 +3,7 @@ from flask.templating import render_template
 from sign_in import sign_in
 from sign_up import sign_up
 from log_out import log_out
+from groups import groups
 from home import home
 from flask_login.login_manager import LoginManager
 from User import get_user
@@ -13,6 +14,7 @@ def create_app():
     app.register_blueprint(sign_in)
     app.register_blueprint(log_out)
     app.register_blueprint(sign_up)
+    app.register_blueprint(groups)
     app.config.from_object('settings')
     return app
 login_manager = LoginManager()
@@ -24,8 +26,8 @@ def main():
     app.run(host='0.0.0.0', port=5000, debug=True)
 
 @login_manager.user_loader
-def load_user(user_id):
-    return get_user(user_id)
+def load_user(email):
+    return get_user(email)
         
 if __name__ == '__main__':
     main()

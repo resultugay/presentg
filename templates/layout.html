@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-	    {% block head %}
 	    <meta charset="utf-8" />
     	<title>PresentG - {% block title %}{% endblock %}</title>
     	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
-    	{% endblock %}
+    	{% block head %}	{% endblock %}
 	</head>
 	<body>
 	
@@ -15,9 +14,10 @@
 		    <div class="navbar-header">
 		      <a class="navbar-brand" href="/">Brand</a>
 		    </div>
-	    {% block content %}{% endblock %}
+	    {% block nav %}{% endblock %}
 	     </div><!-- /.container-fluid -->
 		</nav>
+		{% block content %}{% endblock %}
 	
 	</body>
 	

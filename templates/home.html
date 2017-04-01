@@ -1,6 +1,26 @@
 {% extends "layout.html" %}
 {% block title %}Home{% endblock %}
-{% block content %}
+{% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+  .container{
+   margin-left: 0px;
+  }
+  .btn-primary {
+	width: 20%;
+}
+.navbar-nav>li>.logout-button {
+	color : blue;
+}
+  </style>
+  
+  
+{% endblock %}
+{% block nav %}
 {% if not current_user.is_authenticated %}
 
  <!-- Collect the nav links, forms, and other content for toggling -->
@@ -15,13 +35,80 @@
 		        Or
 		<a href = "{{ url_for('sign_up.sign_up_page') }}" class="btn btn-default">Sign Up</a>
       </form>
+  </div><!-- /.navbar-collapse -->    
+      
 {% endif %}
 {% if current_user.is_authenticated %}
-		  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	<form class="navbar-form navbar-right">
-        		  Hi {{ current_user.name }}!
-	<a href = "{{ url_for('log_out.log_out_page') }}" class="btn btn-default">Log Out</a>
-    </form>
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+    
+    
+    
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"> Hi {{ current_user.name }}!</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Options <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Group</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+         <li><a href = "{{ url_for('log_out.log_out_page') }}" class="btn btn-default" 
+         style="
+    margin-top: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom-width: 1px;
+    margin-bottom: 10px;"                  
+          >Log Out</a></li>      
+        </li>
+      </ul>
+</div><!-- /.navbar-collapse -->    
+    
 {% endif %}
-    </div><!-- /.navbar-collapse -->
 {% endblock %}	
+{% block content %}
+{% if current_user.is_authenticated %}
+<div class="container">
+ <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">New Group</button>
+ 
+ 
+ <ul class="list-unstyled">
+          {% for group in groups %}
+          <li>
+            <a href="{{ url_for('home.home_page') }}">
+              {{ group.group_name }} 
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+ 
+ 
+ 
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">New Group</h4>
+      </div>
+      <div class="modal-body">
+        <form id="create_group_form" role = "form" action ="create_new_group" name = "create_group_form" id = "create_group_form" method = "POST" class="text-left">
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">Group Name</label>
+            <input type="text" class="form-control" id="create_group_name" name="create_group_name"  placeholder="Group Name" />          
+          </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="submit"  class="btn btn-primary">Create</button>
+	      </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endif %}
+
+{% endblock %}

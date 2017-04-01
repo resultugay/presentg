@@ -14,6 +14,9 @@ from ctypes.wintypes import BOOLEAN
 from sqlalchemy.sql.sqltypes import BINARY
 from User import User
 from datetime import datetime
+from flask_login.utils import current_user
+from datetime import datetime
+from Group import Group
 
 Base = declarative_base()    
 
@@ -30,32 +33,22 @@ session.add(new_person)
 session.commit()
 '''
 
-sign_up = Blueprint('sign_up',__name__)
+groups  = Blueprint('groups',__name__)
 ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
-@sign_up.route('/signup', methods=['GET', 'POST'])
-def sign_up_page():
+@groups.route('/create_new_group', methods=['GET', 'POST'])
+def group_page():
     if request.method == 'GET':
         return render_template("sign_up.html")
     else:
-        username = request.form['reg_username']
-        password = request.form['reg_password']
-        #for the salt create 16 character long salt and use it for hash
-        user_id = ""
+        group_name = request.form['create_group_name']
+        group_id = ""
         for i in range(16):
-            user_id = user_id + (random.choice(ALPHABET))                
-        #hashed_password = hash.sha512_crypt.using(salt=salt).hash(password)   
-        hashed_password = hash.sha512_crypt.using(salt_size = 4).hash(password)     
-        #k = hash.sha512_crypt.verify(password, hashed_password) for verifying hash        
-        email    =  request.form['reg_email']
-        name =  request.form['reg_name']
-        surname =  request.form['reg_surname']   
-        if request.form['reg_gender'] == "male":
-            gender = 'M'
-        else:
-            gender = 'F'
-        new_user = User(username=username,email=email,name=name,surname=surname,password=hashed_password,user_id=user_id,gender = gender,reg_date=datetime.now())
-        session.add(new_user)
+            group_id = group_id + (random.choice(ALPHABET))   
+        creator_email = current_user.get_email()
+        creation_date = datetime.now()
+        new_group = Group(group_id =group_id, group_name = group_name,creator_email=creator_email,creation_date=creation_date)
+        session.add(new_group)
         session.commit()
         return render_template("home.html")

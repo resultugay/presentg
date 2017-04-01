@@ -7,7 +7,8 @@ from passlib import hash
 from flask_login import logout_user
 from flask import current_app, request,redirect
 from flask import Blueprint, abort, flash, redirect, render_template, url_for
-
+from User import get_user
+from flask_login.utils import current_user
 
 log_out = Blueprint('log_out',__name__)
 

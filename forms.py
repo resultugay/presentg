@@ -7,6 +7,6 @@ from datetime import datetime
 
 
 class LoginForm(FlaskForm):
-    username = StringField('username' , validators=[DataRequired()])
+    email = StringField('email' , validators=[DataRequired()])
     password = StringField('password' , validators=[DataRequired()])
 
