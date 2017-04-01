@@ -33,32 +33,12 @@ session.add(new_person)
 session.commit()
 '''
 
-groups  = Blueprint('groups',__name__)
+groups_options  = Blueprint('groups_options',__name__)
 ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
-@groups.route('/create_new_group', methods=['GET', 'POST'])
-def create_group_form_modal():
-    if request.method == 'GET':
-        return render_template("sign_up.html")
-    else:
-        group_name = request.form['create_group_name']
-        group_id = ""
-        for i in range(16):
-            group_id = group_id + (random.choice(ALPHABET))   
-        creator_email = current_user.get_email()
-        creation_date = datetime.now()
-        new_group = Group(group_id =group_id, group_name = group_name,creator_email=creator_email,creation_date=creation_date)
-        session.add(new_group)
-        session.commit()
-        new_group_member = Group_member(group_id =group_id,user_id = current_user.get_user_id(),membership_date=creation_date)
-        session.add(new_group_member)                    
-        session.commit()
-        return render_template("home.html")
 
-@groups.route('/groups', methods=['GET', 'POST'])
-def groups_page():
-    if request.method == 'GET':
+@groups_options.route('/<string:group_id>')
+def group_options_page(group_id):
         return render_template("groups.html")
-    else:
-        return render_template("groups.html")
+

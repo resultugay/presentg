@@ -4,6 +4,7 @@ from sign_in import sign_in
 from sign_up import sign_up
 from log_out import log_out
 from groups import groups
+from group_options import groups_options
 from home import home
 from flask_login.login_manager import LoginManager
 from User import get_user
@@ -14,6 +15,7 @@ def create_app():
     app.register_blueprint(sign_in)
     app.register_blueprint(log_out)
     app.register_blueprint(sign_up)
+    app.register_blueprint(groups_options)
     app.register_blueprint(groups)
     app.config.from_object('settings')
     return app
