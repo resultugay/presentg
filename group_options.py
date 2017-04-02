@@ -14,12 +14,11 @@ from ctypes.wintypes import BOOLEAN
 from sqlalchemy.sql.sqltypes import BINARY
 from User import User
 from datetime import datetime
-from flask_login.utils import current_user
+from flask_login.utils import current_user, login_required
 from datetime import datetime
 from Group import Group
 from Group_member import Group_member
 Base = declarative_base()    
-
 
 engine = create_engine('postgresql://postgres:123456@localhost:5432/test')
 Base.metadata.bind = engine
@@ -39,6 +38,7 @@ ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
 @groups_options.route('/<string:group_id>')
+@login_required
 def group_options_page(group_id):
         return render_template("groups.html")
 

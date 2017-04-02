@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
        	{% block head %}	{% endblock %}
    
 	</head>
@@ -18,7 +19,7 @@
 		  <div class="container-fluid">
 		    <!-- Brand and toggle get grouped for better mobile display -->
 		    <div class="navbar-header">
-		      <a class="navbar-brand" href="/">Brand</a>
+		      <a class="navbar-brand" href="/">Share Discuss</a>
 		    </div>
 	  {% if not current_user.is_authenticated %}
 
@@ -68,6 +69,41 @@
 {% endif %}
 	     </div><!-- /.container-fluid -->
 		</nav>
+		{% if not current_user.is_authenticated %}
+		<div>
+		<img src="static/images/share.png" alt="Sun"     style="
+		width : 40%;    " 
+    
+      />
+		</div>		
+		
+		<div 
+		 style="
+ 	     position: fixed;
+   		 bottom: 200px;
+   		 right: 0;
+   		 right : 200px;
+		 width : 300px;
+		 height:150px;
+		 font-family: 'Cookie', cursive; 
+		 font-size: 50px;
+		     border-top-style: dotted;
+		     background-color: #f8f8f8;
+ 	   border-right-style: solid;
+ 	   border-bottom-style: dotted;
+ 	   border-left-style: solid;
+ 	   border-radius: 5px;
+	   border-width:5px;">
+		<p style="text-align: center;
+			top: 50%;
+			position: relative;
+			transform: translateY(-50%);
+			
+			
+		">Share and Discuss </p>
+		</div>
+		{% endif %}
+		
 		{% block content %}{% endblock %}
 	
 	</body>
