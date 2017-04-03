@@ -7,20 +7,45 @@
    margin-left: 0px;
   }
   .btn-primary {
-	width: 20%;
+	width: 95%;
 }
 .navbar-nav>li>.logout-button {
 	color : blue;
 }
-.list-unstyled{
-	width: 20%;
+.groupsUL{
+list-style-type:none;   
+ margin-left: 0px;
+ padding-left: 0px;
+ height:500px; width:22%;
+  overflow:hidden; overflow-y:scroll;
+    
+ }	
+ .groupsLI{
+     height: 44px;
+     padding-top: 6px;
+	 padding-bottom: 6px;
+     
+ }
+ .groupsLI a{
+ 
+  	display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px; 
+    width: 95%;
 	background-color:#337ab7;
 	margin-top: 10px; 
-	padding: 6px 12px 6px 12px;
+	
 	text-align: center;
 	border: 1px solid transparent;
     border-radius: 4px;
- }	
+    overflow: hidden;
+    list-style-type: none; 
+ }
+ .groupsLI a:hover{
+ background-color: #3387b9;
+ }
 
   </style>
        	
@@ -30,20 +55,23 @@
 {% block content %}
 {% if current_user.is_authenticated %}
 <div class="container">
+ <ul class="groupsUL">
  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">New Group</button>
   {% if groups %}
-            {% for group in groups %}
   
- <ul class="list-unstyled">
-          <li>
-                      <a  href="{{  url_for('groups_options.group_options_page', group_id = group.group_id)}}" style="color:#fff;">
+
+             {% for group in groups %}
+ 
+          <li class="groupsLI" >
+                <a  href="{{  url_for('groups_options.group_options_page', group_id = group.group_id)}}" style="color:#fff;">
             
               {{ group.group_name }} 
-   		</a>
+   				</a>
 
           </li>
+                    {% endfor %}
+          
 </ul>
-          {% endfor %}
 
  {% endif %}
  
