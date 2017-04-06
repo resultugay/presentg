@@ -8,6 +8,8 @@ from group_options import groups_options
 from home import home
 from flask_login.login_manager import LoginManager
 from User import get_user
+from pdf import UPLOAD_FOLDER
+from pdf import pdf
 
 def create_app():
     app = Flask(__name__)
@@ -15,9 +17,11 @@ def create_app():
     app.register_blueprint(sign_in)
     app.register_blueprint(log_out)
     app.register_blueprint(sign_up)
+    app.register_blueprint(pdf)
     app.register_blueprint(groups_options)
     app.register_blueprint(groups)
     app.config.from_object('settings')
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     return app
 login_manager = LoginManager()
 

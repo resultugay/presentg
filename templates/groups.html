@@ -65,7 +65,12 @@
  {% if current_user.get_email() == group.creator_email %} 
  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="width: 95%;">New Member</button>
    {% endif %}
-  
+           <li class="groupsLI" >
+
+    <a  href="{{  url_for('pdf.upload_file', group_id = group.group_id)}}" style="color:#fff;">
+            Upload File
+   				</a>
+   				          </li> 
   {% if group_members %}
     <h2 style="text-align:center">Group Members</h2>
 

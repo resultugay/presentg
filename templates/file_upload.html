@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+      	{% block head %}	
+       	
+    <style>
+  .container{
+   margin-left: 0px;
+  }
+  .btn-primary {
+	
+}
+.navbar-nav>li>.logout-button {
+	color : blue;
+}
+.groupsUL{
+ list-style-type:none;   
+ margin-left: 0px;
+ padding-left: 0px;
+
+ height:500px; width:22%;
+ overflow:hidden; 
+   {% if scroll %} 
+ overflow-y:scroll;
+   {% endif %}
+
+    
+ }	
+ .groupsLI{
+     height: 44px;
+     padding-top: 6px;
+	 padding-bottom: 6px;
+     
+ }
+ .groupsLI{
+ 
+  	display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px; 
+    width: 95%;
+	background-color:#337ab7;
+	margin-top: 10px; 
+	
+	text-align: center;
+	border: 1px solid transparent;
+    border-radius: 4px;
+    overflow: hidden;
+    list-style-type: none; 
+ }
+ .groupsLI a:hover{
+ background-color: #3387b9;
+ }
+
+  </style>
+       	
+       	
+       	{% endblock %}
+{% block content %}
+{% if current_user.is_authenticated %}
+<div class="container">
+ <div class="groupsUL">
+    <h1>Upload new File</h1>
+    <form method=post enctype=multipart/form-data >
+      <p><input class="groupsLI"  type=file name=file>
+         <input class="groupsLI"  type=submit value=Upload>
+    </form>
+    </div>
+    </div>
+    
+    
+{% endif %}
+
+{% endblock %}
