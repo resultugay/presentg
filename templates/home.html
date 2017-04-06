@@ -7,17 +7,22 @@
    margin-left: 0px;
   }
   .btn-primary {
-	width: 95%;
+	
 }
 .navbar-nav>li>.logout-button {
 	color : blue;
 }
 .groupsUL{
-list-style-type:none;   
+ list-style-type:none;   
  margin-left: 0px;
  padding-left: 0px;
+
  height:500px; width:22%;
-  overflow:hidden; overflow-y:scroll;
+ overflow:hidden; 
+   {% if scroll %} 
+ overflow-y:scroll;
+   {% endif %}
+
     
  }	
  .groupsLI{
@@ -56,14 +61,18 @@ list-style-type:none;
 {% if current_user.is_authenticated %}
 <div class="container">
  <ul class="groupsUL">
- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">New Group</button>
+ 
+ <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="width: 95%;">New Group</button>
+ 
   {% if groups %}
-  
+   
+    <h2 style="text-align:center">Groups</h2>
+
 
              {% for group in groups %}
  
           <li class="groupsLI" >
-                <a  href="{{  url_for('groups_options.group_options_page', group_id = group.group_id)}}" style="color:#fff;">
+                <a  href="{{  url_for('groups.groups_page', group_id = group.group_id)}}" style="color:#fff;">
             
               {{ group.group_name }} 
    				</a>

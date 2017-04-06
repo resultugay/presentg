@@ -61,3 +61,6 @@ def get_user(email):
     return user1
 
 
+def get_username(email):
+    user = session.query(User).filter(User.email==email).first() if User else None
+    return user.username

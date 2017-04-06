@@ -1,1 +1,113 @@
 {% extends "layout.html" %}
+{% block title %}    {{ group.group_name }} {% endblock %}
+       	{% block head %}	
+       	
+    <style>
+  .container{
+   margin-left: 0px;
+  }
+  .btn-primary {
+	
+}
+.navbar-nav>li>.logout-button {
+	color : blue;
+}
+.groupsUL{
+ list-style-type:none;   
+ margin-left: 0px;
+ padding-left: 0px;
+
+ height:500px; width:22%;
+ overflow:hidden; 
+   {% if scroll %} 
+ overflow-y:scroll;
+   {% endif %}
+
+    
+ }	
+ .groupsLI{
+     height: 44px;
+     padding-top: 6px;
+	 padding-bottom: 6px;
+     
+ }
+ .groupsLI a{
+ 
+  	display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px; 
+    width: 95%;
+	background-color:#337ab7;
+	margin-top: 10px; 
+	
+	text-align: center;
+	border: 1px solid transparent;
+    border-radius: 4px;
+    overflow: hidden;
+    list-style-type: none; 
+ }
+ .groupsLI a:hover{
+ background-color: #3387b9;
+ }
+
+  </style>
+       	
+       	
+       	{% endblock %}
+
+{% block content %}
+{% if current_user.is_authenticated %}
+<div class="container">
+ <ul class="groupsUL">
+ 
+ {% if current_user.get_email() == group.creator_email %} 
+ <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="width: 95%;">New Member</button>
+   {% endif %}
+  
+  {% if group_members %}
+    <h2 style="text-align:center">Group Members</h2>
+
+
+             {% for members in group_members %}
+ 
+          <li class="groupsLI" >
+                <a  href="#" style="color:#fff;">
+            
+              {{ members }} 
+   				</a>
+
+          </li>
+                    {% endfor %}
+          
+</ul>
+
+ {% endif %}
+ 
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">New Member</h4>
+      </div>
+      <div class="modal-body">
+        <form id="add_new_member_form" role = "form" action ="{{group.group_id}}/add_new_member" name = "add_new_member_form" id = "add_new_member_form" method = "POST" class="text-left">
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">User Email</label>
+            <input type="text" class="form-control" id="add_new_member" name="add_new_member"  placeholder="Group Name" />          
+          </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="submit"  class="btn btn-primary">Add</button>
+	      </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endif %}
+
+{% endblock %}

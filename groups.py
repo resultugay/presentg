@@ -18,6 +18,10 @@ from flask_login.utils import current_user
 from datetime import datetime
 from Group import Group
 from Group_member import Group_member
+from Group_member import get_group_members_using_group_id
+from flask_login import login_required
+from Group import get_group_using_group_id
+from User import get_username
 Base = declarative_base()    
 
 
@@ -51,14 +55,35 @@ def create_group_form_modal():
         new_group = Group(group_id =group_id, group_name = group_name,creator_email=creator_email,creation_date=creation_date)
         session.add(new_group)
         session.commit()
-        new_group_member = Group_member(group_id =group_id,user_id = current_user.get_user_id(),membership_date=creation_date)
+        new_group_member = Group_member(group_id =group_id,user_email = current_user.get_email(),membership_date=creation_date)
         session.add(new_group_member)                    
         session.commit()
         return render_template("home.html")
 
-@groups.route('/groups', methods=['GET', 'POST'])
-def groups_page():
+    
+@groups.route('/<string:group_id>')
+@login_required
+def groups_page(group_id):
+        group = get_group_using_group_id(group_id)
+        group_members = get_group_members_using_group_id(group_id)
+        members = []
+        scroll = False
+        for mem in group_members:
+            members.append(get_username(mem.user_email))
+        if(len(members)>10):
+            scroll = True; 
+        return render_template("groups.html",group = group,group_members=members)    
+
+@groups.route('/<string:group_id>/add_new_member', methods=['GET', 'POST'])
+@login_required
+def add_new_member_form_modal(group_id):
     if request.method == 'GET':
-        return render_template("groups.html")
+        return render_template("sign_up.html")
     else:
-        return render_template("groups.html")
+        user_email = request.form['add_new_member']
+        creator_email = current_user.get_email()
+        creation_date = datetime.now()
+        new_group_member = Group_member(group_id =group_id,user_email = user_email,membership_date=creation_date)
+        session.add(new_group_member)                    
+        session.commit()
+        return render_template("home.html")   

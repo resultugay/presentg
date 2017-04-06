@@ -18,6 +18,7 @@ from flask_login.utils import current_user, login_required
 from datetime import datetime
 from Group import Group
 from Group_member import Group_member
+from Group import get_group_using_group_id
 Base = declarative_base()    
 
 engine = create_engine('postgresql://postgres:123456@localhost:5432/test')
@@ -37,8 +38,8 @@ ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
 
-@groups_options.route('/<string:group_id>')
+@groups_options.route('/groupsoptions')
 @login_required
-def group_options_page(group_id):
-        return render_template("groups.html")
+def group_options_page():
+        return render_template("groups_options.html")
 

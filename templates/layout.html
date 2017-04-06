@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 	    <meta charset="utf-8" />
-    	<title>PresentG - {% block title %}{% endblock %}</title>
+    	<title>ShaDis - {% block title %}{% endblock %}</title>
     	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
     	  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +10,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
+  
+
 {% block head %}	{% endblock %}
 </head>
 	<body>
@@ -49,7 +51,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Options <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">Profile</a></li>
-            <li><a href="{{ url_for('groups.groups_page') }}">Group</a></li>
+            <li><a href="{{ url_for('groups_options.group_options_page') }}">Group</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="#">Separated link</a></li>
           </ul>
@@ -104,7 +106,16 @@
 		{% endif %}
 		
 		{% block content %}{% endblock %}
-	
+	<div class="footer" style="position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 5%;
+  background-color: #f8f8f8;
+  text-align: center;
+  ">
+  <p>Copyright &copy; 2017 I.T.U. All rights reserved. </p>
+</div>
 	</body>
 	
 </html>

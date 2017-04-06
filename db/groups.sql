@@ -16,7 +16,7 @@ CREATE TABLE public."groups"
 (
   id bigint NOT NULL DEFAULT nextval('group_id_seq'::regclass),
   group_id character varying  NOT NULL UNIQUE,
-  group_name character varying  NOT NULL,
+  group_name character varying  NOT NULL UNIQUE,
   creation_date timestamp,
   creator_email character varying NOT NULL,
   primary key(group_id)

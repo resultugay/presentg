@@ -14,7 +14,7 @@ CREATE TABLE public."group_members"
 (
   id bigint NOT NULL DEFAULT nextval('group_members_id_seq'::regclass),
   group_id character varying  NOT NULL references groups(group_id),
-  user_id character varying  NOT NULL references users(user_id),
+  user_email character varying  NOT NULL references users(email),
   membership_date timestamp, 
-  primary key(membership_date)
+  primary key(group_id,user_email)
 );
