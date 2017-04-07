@@ -5,11 +5,23 @@ from flask import flash
 from flask import Blueprint, abort, flash, redirect, render_template, url_for
 from flask import current_app
 from flask import send_from_directory
-
+from sqlalchemy.ext.declarative.api import declarative_base
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from File import File
+from flask_login.utils import current_user
+from datetime import datetime
 
 UPLOAD_FOLDER = '/pdfs'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
+Base = declarative_base()    
+
+
+engine = create_engine('postgresql://postgres:123456@localhost:5432/test')
+Base.metadata.bind = engine
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
 
 pdf = Blueprint('pdf',__name__)
@@ -28,14 +40,19 @@ def upload_file(group_id):
             flash('No file part')
             return redirect(request.url)
         file = request.files['file']
-        # if user does not select file, browser also
-        # submit a empty part without filename
+        data = request.files['file'].read()
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save('pdfs/' + filename) 
+            #newly added
+            fl = File(group_id = group_id,owner_email=current_user.get_email(),filename = file.filename,file = data,upload_date=datetime.now())
+            session.add(fl)
+            session.commit()
+            print("done")
+            #newly added
             return redirect(url_for('pdf.uploaded_file',filename=filename))
     return render_template("file_upload.html")
 
