@@ -11,6 +11,8 @@ from sqlalchemy.orm import sessionmaker
 from File import File
 from flask_login.utils import current_user
 from datetime import datetime
+from sign_up import ALPHABET
+import random
 
 UPLOAD_FOLDER = '/pdfs'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
@@ -48,7 +50,10 @@ def upload_file(group_id):
             filename = secure_filename(file.filename)
             file.save('pdfs/' + filename) 
             #newly added
-            fl = File(group_id = group_id,owner_email=current_user.get_email(),filename = file.filename,file = data,upload_date=datetime.now())
+            file_id = ""
+            for i in range(16):
+                file_id = file_id + (random.choice(ALPHABET))   
+            fl = File(group_id = group_id,file_id=file_id,owner_email=current_user.get_email(),filename = file.filename,file = data,upload_date=datetime.now())
             session.add(fl)
             session.commit()
             print("done")

@@ -6,6 +6,7 @@ from Group import get_group2
 from Group import Group
 from Group_member import get_groups_using_user_email
 from Group import get_group_using_group_id
+from File import get_file_names_using_group_id
 
 home = Blueprint('home',__name__)
 
@@ -25,7 +26,11 @@ def home_page():
 
 
 
-@home.route('/test')
+@home.route('/test/<string:group_id>/<string:file_id>')
 @login_required
-def test_page():
-    return render_template("home.html")
+def test_page(group_id,file_id):
+    files = get_file_names_using_group_id('hWNhtlCYFzwEntgf')
+    for k in files:
+        print(k  + " " + files[k])
+    
+    return render_template("test.html",group_id=group_id,file_id=file_id)
