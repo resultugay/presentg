@@ -5,6 +5,7 @@
     <style>
   .container{
    margin-left: 0px;
+   
   }
   .btn-primary {
 	
@@ -12,6 +13,7 @@
 .navbar-nav>li>.logout-button {
 	color : blue;
 }
+
 .groupsUL{
  list-style-type:none;   
  margin-left: 0px;
@@ -19,10 +21,6 @@
 
  height:500px; width:22%;
  overflow:hidden; 
-   {% if scroll %} 
- overflow-y:scroll;
-   {% endif %}
-
     
  }	
  .groupsLI{
@@ -60,7 +58,11 @@
 {% block content %}
 {% if current_user.is_authenticated %}
 <div class="container">
- <ul class="groupsUL">
+ <ul class="groupsUL" style="
+    {% if scroll %} 
+ overflow-y:scroll;
+   {% endif %} 
+ ">
  
  {% if current_user.get_email() == group.creator_email %} 
  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="width: 95%;">New Member</button>
@@ -86,24 +88,30 @@
           </li>
                     {% endfor %}
           
-          <h2 style="text-align:center">Files</h2>
+          
+          
+</ul>
+ <ul  class="groupsUL"  style="position:absolute; left:80%; top:10%;  padding-right:3%;  width:20%;
+ 
+    {% if scroll %} 
+ overflow-y:scroll;
+   {% endif %} 
+
+ ">
+		<h2 style="text-align:center">Files</h2>
 
 
              {% for file in files %}
  
           <li class="groupsLI" >
-                <a  href="{{  url_for('home.test_page', group_id = group.group_id,file_id = file)}}" style="color:#fff;">
+                <a  href="{{  url_for('groups.group_file_page', group_id = group.group_id,file_id = file)}}" style="color:#fff;">
             
               {{ files[file] }} 
    				</a>
 
           </li>
                     {% endfor %}
-          
-          
-          
-</ul>
-
+           </ul>
  {% endif %}
  
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
@@ -129,10 +137,10 @@
   </div>
 </div>
 </div>
-<div style = "width: 50%; height : 50%; position:absolute; left:30%; top:100px;">
-    <object data=" {{ file }} " type="application/pdf" width="100%" height="100%">
-        alt : <a href="test.pdf">test.pdf</a>
-    </object>
+<div style = "width: 56%; height : 60%; position:absolute; left:22%; top:10%">
+			<h4 style="text-align:center">{{filename}}</h4>
+
+    <embed src="/{{group_id}}/{{file_id}}" width="100%" height="375">
 </div>
 {% endif %}
 

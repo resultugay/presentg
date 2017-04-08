@@ -75,15 +75,16 @@ def groups_page(group_id):
         scroll = False
         for mem in group_members:
             members.append(get_username(mem.user_email))
-        if(len(members)>10):
+        if(len(members)>5):
             scroll = True; 
         files = get_file_names_using_group_id(group_id)
-        return render_template("groups.html",group = group,group_members=members,files=files)    
+        return render_template("groups.html",group = group,group_members=members,files=files,scroll=scroll)    
 
 
 @groups.route('/<string:group_id>/<string:file_id>')
 @login_required
 def groups_page_file(group_id,file_id):
+        '''
         group = get_group_using_group_id(group_id)
         group_members = get_group_members_using_group_id(group_id)
         members = []
@@ -92,13 +93,29 @@ def groups_page_file(group_id,file_id):
             members.append(get_username(mem.user_email))
         if(len(members)>10):
             scroll = True; 
+        '''
         files = get_file_names_using_group_id(group_id)        
         file = get_file_using_file_id(file_id) 
         response = make_response(file.file)
         response.headers['Content-Type'] = 'application/pdf'
-        print("o")
         return response
-    
+
+
+
+@groups.route('/test/<string:group_id>/<string:file_id>')
+@login_required
+def group_file_page(group_id,file_id):
+        group = get_group_using_group_id(group_id)
+        group_members = get_group_members_using_group_id(group_id)
+        members = []
+        scroll = False
+        for mem in group_members:
+            members.append(get_username(mem.user_email))
+        if(len(members)>5):
+            scroll = True; 
+        files = get_file_names_using_group_id(group_id)
+        filename = get_file_using_file_id(file_id).filename
+        return render_template("groups.html",files=files,group_members=members,group=group,group_id=group_id,file_id=file_id,scroll=scroll,filename=filename)
     
 @groups.route('/<string:group_id>/add_new_member', methods=['GET', 'POST'])
 @login_required
