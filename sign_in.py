@@ -7,6 +7,7 @@ from passlib import hash
 from flask_login import login_user
 from flask import current_app, request,redirect
 from flask import Blueprint, abort, flash, redirect, render_template, url_for
+from wtforms.validators import Email, InputRequired, ValidationError
 
 
 
@@ -25,5 +26,6 @@ def sign_in_page():
                 flash('You have logged in.')
                 next_page = request.args.get('next', url_for('home.home_page'))
                 return redirect(next_page)
-        flash('Invalid Credentials')            
+        flash('Invalid Credentials')    
+        
     return render_template("sign_in.html",form = form)

@@ -48,30 +48,43 @@
  .groupsLI a:hover{
  background-color: #3387b9;
  }
-
+		div.flash {
+		    color: #fff;
+		    background-color: #337ab7;
+		    border-color: #2e6da4;
+		    border: 1px solid transparent;
+		    border-radius: 4px;
+		    text-align: center;
+		    
+			margin: auto;
+		    width: 20%;
+		    padding: 10px;
+		}
   </style>
        	
        	
        	{% endblock %}
 
 {% block content %}
+
 {% if current_user.is_authenticated %}
+		{% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+    	{% endfor %}
+
 <div class="container">
- <ul class="groupsUL" style="
+ <ul class="groupsUL"  style="position:absolute; left:2%; top:13%;  padding-right:3%;  width:20%;
+ 
     {% if scroll %} 
  overflow-y:scroll;
    {% endif %} 
  ">
+     <h2 style="text-align:center">Groups</h2>
  
  {% if current_user.get_email() == group.creator_email %} 
  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="width: 95%;">New Member</button>
    {% endif %}
-           <li class="groupsLI" >
 
-    <a  href="{{  url_for('pdf.upload_file', group_id = group.group_id)}}" style="color:#fff;">
-            Upload File
-   				</a>
-   				          </li> 
   {% if group_members %}
     <h2 style="text-align:center">Group Members</h2>
 
@@ -90,15 +103,21 @@
           
           
 </ul>
- <ul  class="groupsUL"  style="position:absolute; left:80%; top:10%;  padding-right:3%;  width:20%;
+ <ul  class="groupsUL"  style="position:absolute; left:80%; top:13%;  padding-right:3%;  width:20%;
  
     {% if scroll %} 
  overflow-y:scroll;
    {% endif %} 
 
  ">
+   {% if files %}
 		<h2 style="text-align:center">Files</h2>
+                    <li class="groupsLI" style = "margin-bottom:10px">
 
+    <a  href="{{  url_for('pdf.upload_file', group_id = group.group_id)}}" style="color:#fff;">
+            Upload File
+   				</a>
+   				          </li> 
 
              {% for file in files %}
  
@@ -111,7 +130,17 @@
           </li>
                     {% endfor %}
            </ul>
+  {% else %}  
+  		<h2 style="text-align:center">No File Found</h2>
+                    <li class="groupsLI" >
+
+    <a  href="{{  url_for('pdf.upload_file', group_id = group.group_id)}}" style="color:#fff;">
+            Upload File
+   				</a>
+   				          </li> 
  {% endif %}
+  {% endif %}
+ 
  
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
   <div class="modal-dialog" role="document">

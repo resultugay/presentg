@@ -60,7 +60,12 @@
 {% block content %}
 {% if current_user.is_authenticated %}
 <div class="container">
- <ul class="groupsUL">
+ <ul class="groupsUL" style="position:absolute; left:2%; top:13%;  padding-right:3%;  width:20%;
+ 
+    {% if scroll %} 
+ overflow-y:scroll;
+   {% endif %} 
+ "">
  
  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="width: 95%;">New Group</button>
  

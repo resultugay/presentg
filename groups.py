@@ -26,13 +26,16 @@ from File import get_file_names_using_group_id, get_file_using_file_id
 import psycopg2
 import io
 from flask import make_response
+from sqlalchemy import exc
+from flask import flash
+from flask import Blueprint, abort, flash, redirect, render_template, url_for
 
 Base = declarative_base()    
 
 
 engine = create_engine('postgresql://postgres:123456@localhost:5432/test')
 Base.metadata.bind = engine
-DBSession = sessionmaker(bind=engine)
+DBSession = sessionmaker(bind=engine,autoflush=True)
 session = DBSession()
 
 ''' 
@@ -78,7 +81,15 @@ def groups_page(group_id):
         if(len(members)>5):
             scroll = True; 
         files = get_file_names_using_group_id(group_id)
-        return render_template("groups.html",group = group,group_members=members,files=files,scroll=scroll)    
+        #file_id , filename = None
+        if bool(files):
+            file_id = list(files.keys())[0]
+            filename = files[file_id]     
+            return render_template("groups.html",group = group,group_members=members,files=files,scroll=scroll,group_id=group_id,file_id=file_id,filename=filename)    
+
+        else:
+            return render_template("groups.html",group = group,group_members=members,files=files,scroll=scroll)    
+
 
 
 @groups.route('/<string:group_id>/<string:file_id>')
@@ -127,6 +138,15 @@ def add_new_member_form_modal(group_id):
         creator_email = current_user.get_email()
         creation_date = datetime.now()
         new_group_member = Group_member(group_id =group_id,user_email = user_email,membership_date=creation_date)
-        session.add(new_group_member)                    
-        session.commit()
-        return render_template("home.html")   
+        session.add(new_group_member)  
+        try:
+            session.commit()
+            flash("New member is succesfully added!")
+            next_page = request.args.get('next', url_for('groups.groups_page',group_id=group_id))
+            return redirect(next_page)
+        except exc.SQLAlchemyError:
+            flash("New member could not added!")
+            session.rollback()
+            next_page = request.args.get('next', url_for('groups.groups_page',group_id=group_id))
+            return redirect(next_page)
+        
