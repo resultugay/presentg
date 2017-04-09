@@ -24,13 +24,13 @@
     
  }	
  .groupsLI{
-     height: 44px;
-     padding-top: 6px;
-	 padding-bottom: 6px;
+     height: 36px;
+     padding-top: 1px;
+	 padding-bottom: 1px;
      
  }
  .groupsLI a{
- 
+ 	height:100%;
   	display: block;
     color: white;
     text-align: center;
@@ -38,8 +38,7 @@
     padding: 10px; 
     width: 95%;
 	background-color:#337ab7;
-	margin-top: 10px; 
-	
+	margin-top: 10px; 	
 	text-align: center;
 	border: 1px solid transparent;
     border-radius: 4px;
@@ -104,7 +103,7 @@
              {% for file in files %}
  
           <li class="groupsLI" >
-                <a  href="{{  url_for('groups.group_file_page', group_id = group.group_id,file_id = file)}}" style="color:#fff;">
+                <a   title="{{files[file]}}"  href="{{  url_for('groups.group_file_page', group_id = group.group_id,file_id = file)}}" style="color:#fff;">
             
               {{ files[file] }} 
    				</a>
