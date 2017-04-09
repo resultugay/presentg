@@ -48,7 +48,8 @@ def upload_file(group_id):
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save('pdfs/' + filename) 
+            
+            #file.save('pdfs/' + filename) 
             #newly added
             file_id = ""
             for i in range(16):
@@ -58,7 +59,8 @@ def upload_file(group_id):
             session.commit()
             print("done")
             #newly added
-            return redirect(url_for('pdf.uploaded_file',filename=filename))
+            #return redirect(url_for('pdf.uploaded_file',filename=filename))
+            return redirect(url_for('groups.group_file_page',group_id=group_id,file_id=file_id))
     return render_template("file_upload.html")
 
 
