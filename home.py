@@ -1,12 +1,9 @@
 from flask.blueprints import Blueprint
 from flask.templating import render_template
-from flask_login import current_user, login_required, login_user, logout_user
-from datetime import datetime
-from Group import get_group2
-from Group import Group
+from flask_login import current_user
+
 from Group_member import get_groups_using_user_email
 from Group import get_group_using_group_id
-from File import get_file_names_using_group_id
 
 home = Blueprint('home',__name__)
 

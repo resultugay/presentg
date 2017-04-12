@@ -1,13 +1,10 @@
-from flask.blueprints import Blueprint
-from flask.templating import render_template
-from flask import flash
+
 from forms import LoginForm
 from User import get_user
 from passlib import hash
 from flask_login import login_user
-from flask import current_app, request,redirect
-from flask import Blueprint, abort, flash, redirect, render_template, url_for
-from wtforms.validators import Email, InputRequired, ValidationError
+from flask import request
+from flask import Blueprint,  flash, redirect, render_template, url_for
 
 
 

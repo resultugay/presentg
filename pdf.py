@@ -1,9 +1,6 @@
-import os
-from flask import Flask, request, redirect, url_for
+
 from werkzeug.utils import secure_filename
-from flask import flash
-from flask import Blueprint, abort, flash, redirect, render_template, url_for
-from flask import current_app
+from flask import Blueprint, flash, redirect, render_template, url_for
 from flask import send_from_directory
 from sqlalchemy.ext.declarative.api import declarative_base
 from sqlalchemy import create_engine

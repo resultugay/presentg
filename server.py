@@ -1,5 +1,4 @@
 from flask import Flask
-from flask.templating import render_template
 from sign_in import sign_in
 from sign_up import sign_up
 from log_out import log_out

@@ -1,14 +1,7 @@
-from flask import current_app
-from flask_login import UserMixin
-from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime, func
+from sqlalchemy import Column, String
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.dialects import postgresql
-from sqlalchemy.sql import select
-from flask_login import login_manager
-import random
 
 Base = declarative_base()    
 engine = create_engine('postgresql://postgres:123456@localhost:5432/test')

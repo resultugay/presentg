@@ -1,19 +1,9 @@
-from flask.blueprints import Blueprint
-from flask.templating import render_template
-from flask import current_app, request
-from passlib.apps import custom_app_context as pwd_context
-from passlib import hash
-import bcrypt
+
+from flask import  request
 import random
-from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime, func
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from ctypes.wintypes import BOOLEAN
-from sqlalchemy.sql.sqltypes import BINARY
-from User import User
-from datetime import datetime
 from flask_login.utils import current_user
 from datetime import datetime
 from Group import Group
@@ -23,12 +13,9 @@ from flask_login import login_required
 from Group import get_group_using_group_id
 from User import get_username
 from File import get_file_names_using_group_id, get_file_using_file_id
-import psycopg2
-import io
 from flask import make_response
 from sqlalchemy import exc
-from flask import flash
-from flask import Blueprint, abort, flash, redirect, render_template, url_for
+from flask import Blueprint, flash, redirect, render_template, url_for
 
 Base = declarative_base()    
 
