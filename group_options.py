@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from flask_login.utils import  login_required
 Base = declarative_base()    
 
-engine = create_engine('postgresql://postgres:123456@localhost:5432/test')
+engine = create_engine('postgresql://rsltgy:123456@localhost:5432/itu')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()

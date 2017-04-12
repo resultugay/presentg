@@ -12,7 +12,7 @@ from datetime import datetime
 Base = declarative_base()    
 
 
-engine = create_engine('postgresql://postgres:123456@localhost:5432/test')
+engine = create_engine('postgresql://rsltgy:123456@localhost:5432/itu')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
