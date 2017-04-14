@@ -9,6 +9,7 @@ from File import File
 from flask_login.utils import current_user
 from datetime import datetime
 from sign_up import ALPHABET
+from flask import request
 import random
 
 UPLOAD_FOLDER = '/pdfs'

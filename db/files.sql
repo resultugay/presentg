@@ -11,9 +11,9 @@ ALTER TABLE public.files_id_seq
 CREATE TABLE public."files"
 (
   id bigint NOT NULL DEFAULT nextval('files_id_seq'::regclass),
-  group_id character varying  NOT NULL UNIQUE,
+  group_id character varying  NOT NULL references groups(group_id),
   file_id character varying  NOT NULL UNIQUE,
-  owner_email character varying NOT NULL UNIQUE,
+  owner_email character varying NOT NULL references users(email),
   filename character varying  NOT NULL,
   file bytea,
   upload_date timestamp,
