@@ -9,6 +9,13 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    .container{
+   margin-left: 0px;
+   height:800px;
+  }
+ </style>
+  
 {% block head %}	{% endblock %}
 </head>
 	<body>
@@ -36,12 +43,10 @@
   </div><!-- /.navbar-collapse -->    
       
 {% endif %}
+
 {% if current_user.is_authenticated %}
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-    
-    
-    
+  
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"> Hi {{ current_user.username }}!</a></li>
         <li class="dropdown">
@@ -68,6 +73,8 @@
 	     </div><!-- /.container-fluid -->
 		</nav>
 		{% if not current_user.is_authenticated %}
+		<div class="container">
+		
 		<div>
 		<img src="static/images/share.png" alt="Sun"     style="
 		width : 40%;    " 
@@ -100,11 +107,16 @@
 			
 		">Share and Discuss </p>
 		</div>
+				</div>
+		
 		{% endif %}
 		
 		{% block content %}{% endblock %}
-	<div class="footer" style="position: absolute;
-  bottom: 0;
+<div class="footer" style="
+position: relative;
+  top:100%;
+
+	bottom:0;
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 5%;
@@ -112,7 +124,7 @@
   text-align: center;
   ">
   <p>Copyright &copy; 2017 I.T.U. All rights reserved. </p>
-</div>
+</div>	
 	</body>
 	
 </html>

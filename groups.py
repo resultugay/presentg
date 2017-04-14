@@ -35,7 +35,6 @@ session.commit()
 groups  = Blueprint('groups',__name__)
 ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-
 @groups.route('/create_new_group', methods=['GET', 'POST'])
 def create_group_form_modal():
     if request.method == 'GET':

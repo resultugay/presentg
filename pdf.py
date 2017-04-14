@@ -52,7 +52,7 @@ def upload_file(group_id):
             file_id = ""
             for i in range(16):
                 file_id = file_id + (random.choice(ALPHABET))   
-            fl = File(group_id = group_id,file_id=file_id,owner_email=current_user.get_email(),filename = file.filename,file = data,upload_date=datetime.now())
+            fl = File(group_id = group_id,file_id=file_id,owner_email=current_user.get_email(),filename = filename,file = data,upload_date=datetime.now())
             session.add(fl)
             session.commit()
             print("done")

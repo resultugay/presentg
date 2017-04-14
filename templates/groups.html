@@ -3,10 +3,7 @@
        	{% block head %}	
        	
     <style>
-  .container{
-   margin-left: 0px;
-   
-  }
+
   .btn-primary {
 	
 }
@@ -60,9 +57,84 @@
 		    width: 20%;
 		    padding: 10px;
 		}
+		
+
+.detailBox {
+    width:56%;
+    border:1px solid #bbb;
+    height : 50%; 
+    position:absolute; 
+    left:22%; 
+    top:77%;
+}
+.titleBox {
+    background-color:#fdfdfd;
+    padding:10px;
+}
+.titleBox label{
+  color:#444;
+  margin:0;
+  display:inline-block;
+}
+
+.commentBox {
+    padding:10px;
+    border-top:1px dotted #bbb;
+}
+.commentBox .form-group:first-child, .actionBox .form-group:first-child {
+    width:80%;
+}
+.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
+    width:18%;
+}
+.actionBox .form-group * {
+    width:100%;
+}
+.taskDescription {
+    margin-top:10px 0;
+}
+.commentList {
+    padding:0;
+    list-style:none;
+    max-height:200px;
+    overflow:auto;
+}
+.commentList li {
+    margin:0;
+    margin-top:10px;
+}
+.commentList li > div {
+    display:table-cell;
+}
+.commenterImage {
+    width:30px;
+    margin-right:5px;
+    height:100%;
+    float:left;
+}
+.commenterImage img {
+    width:100%;
+    border-radius:50%;
+}
+.commentText p {
+    margin:0;
+}
+.sub-text {
+    color:#aaa;
+    font-family:verdana;
+    font-size:11px;
+}
+.actionBox {
+    border-top:1px dotted #bbb;
+    padding:10px;
+}		
+		
+		
+		
+		
+		
   </style>
-       	
-       	
+
        	{% endblock %}
 
 {% block content %}
@@ -164,12 +236,74 @@
     </div>
   </div>
 </div>
+
+<div class="detailBox">
+    <div class="titleBox">
+      <label>Comment Box</label>
+        <button type="button" class="close" aria-hidden="true">&times;</button>
+    </div>
+    <div class="commentBox">
+        
+        <p class="taskDescription">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+    </div>
+    <div class="actionBox">
+        <ul class="commentList">
+            <li>
+               <!--  
+                <div class="commenterImage">
+                  <img src="http://placekitten.com/50/50" />
+                </div>
+                -->
+                <div class="commentText">
+                    <p class="">Hello this is a test comment.</p> <span class="date sub-text">on March 5th, 2014</span>
+
+                </div>
+            </li>
+            <li>
+                <div class="commentText">
+                    <p class="">Hello this is a test comment and this comment is particularly very long and it goes on and on and on.</p> <span class="date sub-text">on March 5th, 2014</span>
+
+                </div>
+            </li>
+            <li>
+                <div class="commentText">
+                    <p class="" id=com>Hello this is a test comment.</p> <span class="date sub-text">on March 5th, 2014</span>
+                </div>
+            </li>
+        </ul>
+       	<script type=text/javascript>
+		  $(function() {
+		    $('button#calculate').bind('click', function() {
+		      $.getJSON('/comments', {
+		          come: $('input[name="comment"]').val(),
+		          file_id: "{{file_id}}"
+		        }, function(data) {
+		        $("#com").text(data.result);
+		      });
+		      return false;
+		    });
+		  });
+		  </script>
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="Your comments" name=comment>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default" id=calculate>Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+       	
 </div>
 <div style = "width: 56%; height : 60%; position:absolute; left:22%; top:10%">
 			<h4 style="text-align:center">{{filename}}</h4>
 
     <embed src="/{{group_id}}/{{file_id}}" width="100%" height="375">
 </div>
+
+
+
 {% endif %}
 
 {% endblock %}
