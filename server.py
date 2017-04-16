@@ -31,7 +31,7 @@ def main():
     app = create_app()
     login_manager.init_app(app)
     login_manager.login_view = 'sign_in.sign_in_page'
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
 
 @login_manager.user_loader
 def load_user(email):
