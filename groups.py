@@ -16,6 +16,7 @@ from File import get_file_names_using_group_id, get_file_using_file_id
 from flask import make_response
 from sqlalchemy import exc
 from flask import Blueprint, flash, redirect, render_template, url_for
+from Comment import get_last_3_comments
 
 Base = declarative_base()    
 
@@ -68,10 +69,19 @@ def groups_page(group_id):
             scroll = True; 
         files = get_file_names_using_group_id(group_id)
         #file_id , filename = None
+        comments = []  
+        dates = []
         if bool(files):
             file_id = list(files.keys())[0]
             filename = files[file_id]     
-            return render_template("groups.html",group = group,group_members=members,files=files,scroll=scroll,group_id=group_id,file_id=file_id,filename=filename)    
+            com = get_last_3_comments(file_id)  
+            for a in com:
+                print(a.comment)  
+                comments.append(a.comment)  
+                dates.append(a.comment_date.strftime("%Y-%m-%d %H:%M:%S"))
+                print(a.comment_date.strftime("%Y-%m-%d %H:%M:%S"))
+            
+            return render_template("groups.html",group = group,group_members=members,files=files,scroll=scroll,group_id=group_id,file_id=file_id,filename=filename,comments=list(reversed(comments)),dates=list(reversed(dates)))    
 
         else:
             return render_template("groups.html",group = group,group_members=members,files=files,scroll=scroll)    
@@ -112,7 +122,17 @@ def group_file_page(group_id,file_id):
             scroll = True; 
         files = get_file_names_using_group_id(group_id)
         filename = get_file_using_file_id(file_id).filename
-        return render_template("groups.html",files=files,group_members=members,group=group,group_id=group_id,file_id=file_id,scroll=scroll,filename=filename)
+        
+        comments = []  
+        dates = []       
+        com = get_last_3_comments(file_id)  
+        for a in com:
+            print(a.comment)  
+            comments.append(a.comment)  
+            dates.append(a.comment_date.strftime("%Y-%m-%d %H:%M:%S"))
+            print(a.comment_date.strftime("%Y-%m-%d %H:%M:%S"))
+                
+        return render_template("groups.html",files=files,group_members=members,group=group,group_id=group_id,file_id=file_id,scroll=scroll,filename=filename,comments=list(reversed(comments)),dates=list(reversed(dates)))
     
 @groups.route('/<string:group_id>/add_new_member', methods=['GET', 'POST'])
 @login_required

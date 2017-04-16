@@ -202,40 +202,7 @@
           </li>
                     {% endfor %}
            </ul>
-  {% else %}  
-  		<h2 style="text-align:center">No File Found</h2>
-                    <li class="groupsLI" >
 
-    <a  href="{{  url_for('pdf.upload_file', group_id = group.group_id)}}" style="color:#fff;">
-            Upload File
-   				</a>
-   				          </li> 
- {% endif %}
-  {% endif %}
- 
- 
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exampleModalLabel">New Member</h4>
-      </div>
-      <div class="modal-body">
-        <form id="add_new_member_form" role = "form" action ="{{group.group_id}}/add_new_member" name = "add_new_member_form" id = "add_new_member_form" method = "POST" class="text-left">
-          <div class="form-group">
-            <label for="recipient-name" class="control-label">User Email</label>
-            <input type="text" class="form-control" id="add_new_member" name="add_new_member"  placeholder="Group Name" />          
-          </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="submit"  class="btn btn-primary">Add</button>
-	      </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="detailBox">
     <div class="titleBox">
@@ -243,12 +210,14 @@
         <button type="button" class="close" aria-hidden="true">&times;</button>
     </div>
     <div class="commentBox">
+          {% if not comments %}
         
-        <p class="taskDescription">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        <p class="taskDescription">Be the first to comment!</p>
+  	   {% endif %}
+  	
     </div>
     <div class="actionBox">
-        <ul class="commentList">
-       
+        <ul class="commentList">       
             <li>
                <!--  
                 <div class="commenterImage">
@@ -256,9 +225,9 @@
                 </div>
                 -->
                 <div class="commentText">
-                    <p class="" id=0></p><p class="date sub-text" id=3></p>
-                    <p class="" id=1></p><p class="date sub-text" id=4></p>
-                    <p class="" id=2></p><p class="date sub-text" id=5></p>                    
+                    <p class="" id=0>{{comments[0]}}</p><p class="date sub-text" id=3>{{dates[0]}}</p>
+                    <p class="" id=1>{{comments[1]}}</p><p class="date sub-text" id=4>{{dates[1]}}</p>
+                    <p class="" id=2>{{comments[2]}}</p><p class="date sub-text" id=5>{{dates[2]}}</p>                    
                 </div>
             </li>            
         </ul>
@@ -288,7 +257,52 @@
             </div>
         </form>
     </div>
+</div>           
+           
+           
+           
+           
+           
+           
+  {% else %}  
+  		<h2 style="text-align:center">No File Found</h2>
+                    <li class="groupsLI" >
+
+    <a  href="{{  url_for('pdf.upload_file', group_id = group.group_id)}}" style="color:#fff;">
+            Upload File
+   				</a>
+   				          </li> 
+   				          
+   				          
+   				          
+   				          
+ {% endif %}
+  {% endif %}
+ 
+ 
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">New Member</h4>
+      </div>
+      <div class="modal-body">
+        <form id="add_new_member_form" role = "form" action ="{{group.group_id}}/add_new_member" name = "add_new_member_form" id = "add_new_member_form" method = "POST" class="text-left">
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">User Email</label>
+            <input type="text" class="form-control" id="add_new_member" name="add_new_member"  placeholder="Group Name" />          
+          </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="submit"  class="btn btn-primary">Add</button>
+	      </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
+
        	
 </div>
 <div style = "width: 56%; height : 60%; position:absolute; left:22%; top:10%">
