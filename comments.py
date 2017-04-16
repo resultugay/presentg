@@ -8,6 +8,8 @@ from flask_login.utils import  login_required
 from flask_login.utils import current_user
 from Comment import Comment
 from datetime import datetime
+from Comment import get_last_3_comments
+from psycopg2._json import json
 
 Base = declarative_base()    
 
@@ -32,10 +34,31 @@ comments  = Blueprint('comments',__name__)
 def comments_page():   
     owner_email = current_user.get_email()
     file_id = request.args.get('file_id', 0)
-    comment = request.args.get('come', 0)
+    comment = request.args.get('comme', 0)
     comment_date = datetime.now()
     new_comment = Comment(owner_email=owner_email,file_id=file_id,comment=comment,comment_date=comment_date)
     session.add(new_comment)
     session.commit()    
-    return jsonify(result=comment)
 
+    com = get_last_3_comments(file_id)  
+    comments = []  
+    dates = []
+    for a in com:
+        print(a.comment)  
+        comments.append(a.comment)  
+        dates.append(a.comment_date.strftime("%Y-%m-%d %H:%M:%S"))
+        print(a.comment_date.strftime("%Y-%m-%d %H:%M:%S"))
+    
+    
+    li = ['1','2','3']
+    #return jsonify(result=comments2)
+    com = "dsada"
+    return json.dumps({'status':'OK','comments':list(reversed(comments)),'dates':list(reversed(dates)),'aa':"bb"}) 
+
+def json_serial(obj):
+    """JSON serializer for objects not serializable by default json code"""
+
+    if isinstance(obj, datetime):
+        serial = obj.isoformat()
+        return serial
+    raise TypeError ("Type not serializable")
