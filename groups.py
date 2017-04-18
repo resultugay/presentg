@@ -49,11 +49,18 @@ def create_group_form_modal():
         creation_date = datetime.now()
         new_group = Group(group_id =group_id, group_name = group_name,creator_email=creator_email,creation_date=creation_date)
         session.add(new_group)
-        session.commit()
-        new_group_member = Group_member(group_id =group_id,user_email = current_user.get_email(),membership_date=creation_date)
-        session.add(new_group_member)                    
-        session.commit()
-        return render_template("home.html")
+        try:        
+            session.commit()
+            new_group_member = Group_member(group_id =group_id,user_email = current_user.get_email(),membership_date=creation_date)
+            session.add(new_group_member)                    
+            session.commit()
+            #return render_template("home.html")            
+            next_page = request.args.get('next', url_for('home.home_page',group_id=group_id))
+            return redirect(next_page)
+        except exc.SQLAlchemyError:
+            flash("Problem!!")
+            session.rollback()
+
 
     
 @groups.route('/<string:group_id>')
@@ -65,7 +72,7 @@ def groups_page(group_id):
         scroll = False
         for mem in group_members:
             members.append(get_username(mem.user_email))
-        if(len(members)>5):
+        if(len(members)>8):
             scroll = True; 
         files = get_file_names_using_group_id(group_id)
         #file_id , filename = None
@@ -118,7 +125,7 @@ def group_file_page(group_id,file_id):
         scroll = False
         for mem in group_members:
             members.append(get_username(mem.user_email))
-        if(len(members)>5):
+        if(len(members)>8):
             scroll = True; 
         files = get_file_names_using_group_id(group_id)
         filename = get_file_using_file_id(file_id).filename

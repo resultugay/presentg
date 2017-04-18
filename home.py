@@ -15,7 +15,7 @@ def home_page():
         scroll = False;
         for g in gr:
             gr_names.append(get_group_using_group_id(g.group_id))
-        if(len(gr_names)>5):
+        if(len(gr_names)> 8):
             scroll = True;   
         return render_template("home.html",groups=gr_names,scroll = scroll)
     else:

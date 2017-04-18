@@ -1,6 +1,6 @@
 from flask.blueprints import Blueprint
 from flask.templating import render_template
-from flask import  request
+from flask import  request,flash
 from passlib import hash
 import random
 from sqlalchemy.ext.declarative import declarative_base
@@ -8,6 +8,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from User import User
 from datetime import datetime
+from sqlalchemy import exc
 
 Base = declarative_base()    
 
@@ -51,5 +52,10 @@ def sign_up_page():
             gender = 'F'
         new_user = User(username=username,email=email,name=name,surname=surname,password=hashed_password,user_id=user_id,gender = gender,reg_date=datetime.now())
         session.add(new_user)
-        session.commit()
-        return render_template("home.html")
+        try:
+            session.commit()
+            return render_template("home.html")
+        except exc.SQLAlchemyError:
+            flash("Problem!!")
+            session.rollback()
+

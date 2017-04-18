@@ -11,6 +11,7 @@ from datetime import datetime
 from sign_up import ALPHABET
 from flask import request
 import random
+from sqlalchemy import exc
 
 UPLOAD_FOLDER = '/pdfs'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
@@ -54,12 +55,15 @@ def upload_file(group_id):
                 file_id = file_id + (random.choice(ALPHABET))   
             fl = File(group_id = group_id,file_id=file_id,owner_email=current_user.get_email(),filename = filename,file = data,upload_date=datetime.now())
             session.add(fl)
-            session.commit()
-            print("done")
-            #newly added
-            #return redirect(url_for('pdf.uploaded_file',filename=filename))
-            return redirect(url_for('groups.group_file_page',group_id=group_id,file_id=file_id))
-    return render_template("file_upload.html")
+            try:
+                session.commit()
+                print("done")
+                #newly added
+                #return redirect(url_for('pdf.uploaded_file',filename=filename))
+                return redirect(url_for('groups.group_file_page',group_id=group_id,file_id=file_id))
+            except exc.SQLAlchemyError:
+                session.rollback()
+                return render_template("file_upload.html")
 
 
 @pdf.route('/pdfs/<filename>')
