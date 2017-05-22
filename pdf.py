@@ -63,7 +63,7 @@ def upload_file(group_id):
                 return redirect(url_for('groups.group_file_page',group_id=group_id,file_id=file_id))
             except exc.SQLAlchemyError:
                 session.rollback()
-                return render_template("file_upload.html")
+    return render_template("file_upload.html")
 
 
 @pdf.route('/pdfs/<filename>')
